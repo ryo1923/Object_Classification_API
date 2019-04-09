@@ -1,4 +1,3 @@
-# モデルの保存
 import numpy as np
 from keras.models import load_model
 from keras.applications.mobilenet import MobileNet
