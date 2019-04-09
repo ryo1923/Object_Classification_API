@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="result">
+    <h3>予想クラス</h3>
+    <ul>
+        {% for result in predict_Confidence %}
+        <li>{{result}}</li>
+        {% endfor %}
+    </ul>
+    
+    <form action="/">
+        <button type="submit">戻る</button>
+    </form>
+</div>
+
+{% endblock %}

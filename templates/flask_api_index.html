@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class='main'>
+  <h2>モノが映っている画像を選択してください。</h2>
+  <form action="/result" method="post" enctype="multipart/form-data">
+    <input type="file" id="myImage" name="image" accept="image/png, image/jpeg, image/jpg">
+    <button type="submit">Submit!!</button>
+  </form>
+</div>
+
+
+<!-- 画像の表示 -->
+<div class="image">
+  <img id="image-preview">
+  <script type="text/javascript" language="javascript">
+    const target = document.getElementById("myImage");
+    target.addEventListener("change", function (e) {
+      const file = e.target.files[0];
+      // blob URLの取得
+      const blobUrl = window.URL.createObjectURL(file);
+      const img = document.getElementById("image-preview");
+      img.src = blobUrl;
+    });
+  </script>
+</div>
+
+{% endblock %}
