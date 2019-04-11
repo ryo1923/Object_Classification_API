@@ -8,6 +8,7 @@ import tensorflow as tf
 
 app = Flask(__name__)
 
+
 # モデルの読み込み
 def load_mobilenet_model():
     global model
@@ -20,19 +21,20 @@ def img_pred(image):
 
     # 読み込んだ画像を行列に変換
     img_array = img_to_array(image)
-    
+
     # 3次元を4次元に変換
     img_dims = np.expand_dims(img_array, axis=0)
 
     # Top3のクラスの予測
     with graph.as_default():
-            preds = model.predict(preprocess_input(img_dims))
+        preds = model.predict(preprocess_input(img_dims))
 
     # imagenet_class_index.json をダウンロードし、その中から認識結果を表示
     results = decode_predictions(preds, top=3)[0]
-    
+
     # resultsを整形
-    result = [result[1] + " : " +"{:.2%}".format(result[2]) for result in results]
+    result = [result[1] + " : " +
+              "{:.2%}".format(result[2]) for result in results]
     return result
 
 
@@ -40,12 +42,13 @@ def img_pred(image):
 def index():
     return render_template('./flask_api_index.html')
 
+
 @app.route('/result', methods=['POST'])
 def result():
     # submitした画像が存在したら処理する
     if request.files['image']:
         # 画像の読み込み, 224 * 224にリサイズ
-        image_load = load_img(request.files['image'], target_size=(224,224))
+        image_load = load_img(request.files['image'], target_size=(224, 224))
 
         # クラスの予測をする関数の実行
         predict_Confidence = img_pred(image_load)
@@ -57,6 +60,7 @@ def result():
 @app.context_processor
 def override_url_for():
     return dict(url_for=dated_url_for)
+
 
 def dated_url_for(endpoint, **values):
     if endpoint == 'static':
